@@ -28,134 +28,175 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.TreeView1 = new System.Windows.Forms.TreeView();
-            this.AddLevelButton1 = new System.Windows.Forms.Button();
-            this.DeleteSelectedButton1 = new System.Windows.Forms.Button();
-            this.EditSelectedButton1 = new System.Windows.Forms.Button();
-            this.SaveOperationButton1 = new System.Windows.Forms.Button();
-            this.NameOperationBox1 = new System.Windows.Forms.TextBox();
-            this.ValueOperationBox1 = new System.Windows.Forms.NumericUpDown();
-            this.CancelOperationButton1 = new System.Windows.Forms.Button();
-            this.TypeOperationComboBox1 = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.ValueOperationBox1)).BeginInit();
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Корень");
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.CancelButton = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.ValueOperationBox = new System.Windows.Forms.NumericUpDown();
+            this.NameOperationBox = new System.Windows.Forms.TextBox();
+            this.TypeOperationCombobox = new System.Windows.Forms.ComboBox();
+            this.EditSelectedButton = new System.Windows.Forms.Button();
+            this.DeleteSelectedButton = new System.Windows.Forms.Button();
+            this.AddLevelButton = new System.Windows.Forms.Button();
+            this.treeView1 = new System.Windows.Forms.TreeView();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ValueOperationBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // TreeView1
+            // splitContainer1
             // 
-            this.TreeView1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.TreeView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.TreeView1.Location = new System.Drawing.Point(186, 0);
-            this.TreeView1.Name = "TreeView1";
-            this.TreeView1.Size = new System.Drawing.Size(768, 505);
-            this.TreeView1.TabIndex = 0;
-            this.TreeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView1_NodeMouseClick);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // AddLevelButton1
+            // splitContainer1.Panel1
             // 
-            this.AddLevelButton1.Location = new System.Drawing.Point(12, 12);
-            this.AddLevelButton1.Name = "AddLevelButton1";
-            this.AddLevelButton1.Size = new System.Drawing.Size(168, 26);
-            this.AddLevelButton1.TabIndex = 1;
-            this.AddLevelButton1.Text = "Добавить подуровень";
-            this.AddLevelButton1.UseVisualStyleBackColor = true;
-            this.AddLevelButton1.Click += new System.EventHandler(this.AddLevelButton_Click);
+            this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.CancelButton);
+            this.splitContainer1.Panel1.Controls.Add(this.SaveButton);
+            this.splitContainer1.Panel1.Controls.Add(this.ValueOperationBox);
+            this.splitContainer1.Panel1.Controls.Add(this.NameOperationBox);
+            this.splitContainer1.Panel1.Controls.Add(this.TypeOperationCombobox);
+            this.splitContainer1.Panel1.Controls.Add(this.EditSelectedButton);
+            this.splitContainer1.Panel1.Controls.Add(this.DeleteSelectedButton);
+            this.splitContainer1.Panel1.Controls.Add(this.AddLevelButton);
             // 
-            // DeleteSelectedButton1
+            // splitContainer1.Panel2
             // 
-            this.DeleteSelectedButton1.Location = new System.Drawing.Point(12, 41);
-            this.DeleteSelectedButton1.Name = "DeleteSelectedButton1";
-            this.DeleteSelectedButton1.Size = new System.Drawing.Size(168, 26);
-            this.DeleteSelectedButton1.TabIndex = 2;
-            this.DeleteSelectedButton1.Text = "Удалить выбранный";
-            this.DeleteSelectedButton1.UseVisualStyleBackColor = true;
-            this.DeleteSelectedButton1.Click += new System.EventHandler(this.DeleteSelectedButton_Click);
+            this.splitContainer1.Panel2.Controls.Add(this.treeView1);
+            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.SplitterDistance = 145;
+            this.splitContainer1.TabIndex = 0;
             // 
-            // EditSelectedButton1
+            // CancelButton
             // 
-            this.EditSelectedButton1.Location = new System.Drawing.Point(12, 70);
-            this.EditSelectedButton1.Name = "EditSelectedButton1";
-            this.EditSelectedButton1.Size = new System.Drawing.Size(168, 26);
-            this.EditSelectedButton1.TabIndex = 3;
-            this.EditSelectedButton1.Text = "Изменить выбранный";
-            this.EditSelectedButton1.UseVisualStyleBackColor = true;
-            this.EditSelectedButton1.Click += new System.EventHandler(this.EditSelectedButton_Click);
+            this.CancelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.CancelButton.Location = new System.Drawing.Point(0, 153);
+            this.CancelButton.Name = "CancelButton";
+            this.CancelButton.Size = new System.Drawing.Size(145, 23);
+            this.CancelButton.TabIndex = 7;
+            this.CancelButton.Text = "Отмена";
+            this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // SaveOperationButton1
+            // SaveButton
             // 
-            this.SaveOperationButton1.Location = new System.Drawing.Point(13, 291);
-            this.SaveOperationButton1.Name = "SaveOperationButton1";
-            this.SaveOperationButton1.Size = new System.Drawing.Size(168, 26);
-            this.SaveOperationButton1.TabIndex = 4;
-            this.SaveOperationButton1.Text = "Сохранить";
-            this.SaveOperationButton1.UseVisualStyleBackColor = true;
-            this.SaveOperationButton1.Click += new System.EventHandler(this.SaveButton_Click);
+            this.SaveButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.SaveButton.Location = new System.Drawing.Point(0, 130);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(145, 23);
+            this.SaveButton.TabIndex = 6;
+            this.SaveButton.Text = "Сохранить";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
-            // NameOperationBox1
+            // ValueOperationBox
             // 
-            this.NameOperationBox1.Location = new System.Drawing.Point(12, 235);
-            this.NameOperationBox1.Name = "NameOperationBox1";
-            this.NameOperationBox1.Size = new System.Drawing.Size(168, 22);
-            this.NameOperationBox1.TabIndex = 7;
-            this.NameOperationBox1.TextChanged += new System.EventHandler(this.NameOperationBox1_TextChanged);
+            this.ValueOperationBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ValueOperationBox.Location = new System.Drawing.Point(0, 110);
+            this.ValueOperationBox.Name = "ValueOperationBox";
+            this.ValueOperationBox.Size = new System.Drawing.Size(145, 20);
+            this.ValueOperationBox.TabIndex = 5;
+            this.ValueOperationBox.ValueChanged += new System.EventHandler(this.ValueOperationBox_ValueChanged);
             // 
-            // ValueOperationBox1
+            // NameOperationBox
             // 
-            this.ValueOperationBox1.Location = new System.Drawing.Point(13, 263);
-            this.ValueOperationBox1.Name = "ValueOperationBox1";
-            this.ValueOperationBox1.Size = new System.Drawing.Size(168, 22);
-            this.ValueOperationBox1.TabIndex = 8;
+            this.NameOperationBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.NameOperationBox.Location = new System.Drawing.Point(0, 90);
+            this.NameOperationBox.Name = "NameOperationBox";
+            this.NameOperationBox.Size = new System.Drawing.Size(145, 20);
+            this.NameOperationBox.TabIndex = 4;
+            this.NameOperationBox.TextChanged += new System.EventHandler(this.NameOperationBox_TextChanged);
             // 
-            // CancelOperationButton1
+            // TypeOperationCombobox
             // 
-            this.CancelOperationButton1.Location = new System.Drawing.Point(13, 323);
-            this.CancelOperationButton1.Name = "CancelOperationButton1";
-            this.CancelOperationButton1.Size = new System.Drawing.Size(168, 26);
-            this.CancelOperationButton1.TabIndex = 9;
-            this.CancelOperationButton1.Text = "Отменить";
-            this.CancelOperationButton1.UseVisualStyleBackColor = true;
-            this.CancelOperationButton1.Click += new System.EventHandler(this.CancelButton_Click);
+            this.TypeOperationCombobox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TypeOperationCombobox.FormattingEnabled = true;
+            this.TypeOperationCombobox.Location = new System.Drawing.Point(0, 69);
+            this.TypeOperationCombobox.Name = "TypeOperationCombobox";
+            this.TypeOperationCombobox.Size = new System.Drawing.Size(145, 21);
+            this.TypeOperationCombobox.TabIndex = 3;
+            this.TypeOperationCombobox.SelectedValueChanged += new System.EventHandler(this.TypeOperationCombobox_SelectedValueChanged);
             // 
-            // TypeOperationComboBox1
+            // EditSelectedButton
             // 
-            this.TypeOperationComboBox1.FormattingEnabled = true;
-            this.TypeOperationComboBox1.Location = new System.Drawing.Point(13, 205);
-            this.TypeOperationComboBox1.Name = "TypeOperationComboBox1";
-            this.TypeOperationComboBox1.Size = new System.Drawing.Size(167, 24);
-            this.TypeOperationComboBox1.TabIndex = 10;
+            this.EditSelectedButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.EditSelectedButton.Location = new System.Drawing.Point(0, 46);
+            this.EditSelectedButton.Name = "EditSelectedButton";
+            this.EditSelectedButton.Size = new System.Drawing.Size(145, 23);
+            this.EditSelectedButton.TabIndex = 2;
+            this.EditSelectedButton.Text = "Изменить";
+            this.EditSelectedButton.UseVisualStyleBackColor = true;
+            this.EditSelectedButton.Click += new System.EventHandler(this.EditSelectedButton_Click);
+            // 
+            // DeleteSelectedButton
+            // 
+            this.DeleteSelectedButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.DeleteSelectedButton.Location = new System.Drawing.Point(0, 23);
+            this.DeleteSelectedButton.Name = "DeleteSelectedButton";
+            this.DeleteSelectedButton.Size = new System.Drawing.Size(145, 23);
+            this.DeleteSelectedButton.TabIndex = 1;
+            this.DeleteSelectedButton.Text = "Удалить";
+            this.DeleteSelectedButton.UseVisualStyleBackColor = true;
+            this.DeleteSelectedButton.Click += new System.EventHandler(this.DeleteSelectedButton_Click);
+            // 
+            // AddLevelButton
+            // 
+            this.AddLevelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.AddLevelButton.Location = new System.Drawing.Point(0, 0);
+            this.AddLevelButton.Name = "AddLevelButton";
+            this.AddLevelButton.Size = new System.Drawing.Size(145, 23);
+            this.AddLevelButton.TabIndex = 0;
+            this.AddLevelButton.Text = "Добавить";
+            this.AddLevelButton.UseVisualStyleBackColor = true;
+            this.AddLevelButton.Click += new System.EventHandler(this.AddLevelButton_Click);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            treeNode1.Name = "Root";
+            treeNode1.Text = "Корень";
+            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            this.treeView1.Size = new System.Drawing.Size(651, 450);
+            this.treeView1.TabIndex = 0;
+            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(954, 505);
-            this.Controls.Add(this.TypeOperationComboBox1);
-            this.Controls.Add(this.CancelOperationButton1);
-            this.Controls.Add(this.ValueOperationBox1);
-            this.Controls.Add(this.NameOperationBox1);
-            this.Controls.Add(this.SaveOperationButton1);
-            this.Controls.Add(this.EditSelectedButton1);
-            this.Controls.Add(this.DeleteSelectedButton1);
-            this.Controls.Add(this.AddLevelButton1);
-            this.Controls.Add(this.TreeView1);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.splitContainer1);
             this.Name = "Form1";
-            this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.ValueOperationBox1)).EndInit();
+            this.Text = "Экономическое приложение";
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.ValueOperationBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView TreeView1;
-        private System.Windows.Forms.Button AddLevelButton1;
-        private System.Windows.Forms.Button DeleteSelectedButton1;
-        private System.Windows.Forms.Button EditSelectedButton1;
-        private System.Windows.Forms.Button SaveOperationButton1;
-        private System.Windows.Forms.TextBox NameOperationBox1;
-        private System.Windows.Forms.NumericUpDown ValueOperationBox1;
-        private System.Windows.Forms.Button CancelOperationButton1;
-        private System.Windows.Forms.ComboBox TypeOperationComboBox1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button CancelButton;
+        private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.NumericUpDown ValueOperationBox;
+        private System.Windows.Forms.TextBox NameOperationBox;
+        private System.Windows.Forms.ComboBox TypeOperationCombobox;
+        private System.Windows.Forms.Button EditSelectedButton;
+        private System.Windows.Forms.Button DeleteSelectedButton;
+        private System.Windows.Forms.Button AddLevelButton;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 

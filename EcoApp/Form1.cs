@@ -1,146 +1,148 @@
-﻿using EcoApp.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace EcoApp
 {
+    // Класс формы Form1
     public partial class Form1 : Form
     {
+        /*
+         * В самом верху класса идёт конструктор(ы)
+         * Далее следуют свойства/поля/переменные в порядке:
+         *      1) private
+         *      2) protected
+         *      3) public
+         * Далее идут функции/методы/выражения в таком-же как свойства порядке
+         * 
+         * В файле HelpClass есть полезные подсказки
+         */
+
+        // Конструктор формы Form1
         public Form1()
         {
-            InitializeComponent();
-            Operation op = new Operation { Name = "Корень" };
-            op.Parent = null;
-            OperationsList.Add(op);
-            TreeView1.Nodes.Add(op.Id.ToString(), $@"{op.Name}");
-            SelectedMode();
-            TypeOperationComboBox1.DataSource = Enum.GetValues(typeof(OperationType));
-            TreeView1.CheckBoxes = true;
+            InitializeComponent(); // создаём кнопочки ИЛИ инициализируем компоненты формы
+            ops = new List<Operation>(); // инициализируем массив операций
+            TypeOperationCombobox.DataSource = Enum.GetValues(typeof(OperationType)); // задаём массив типов операций в ComboBox
+            StartView(); // выполняем функцию, блокирующую управление при старте
         }
 
-        public bool IsEditMode { get; set; } = false;
-        public List<Operation> OperationsList { get; set; } = new List<Operation>();
-        public TreeNode SelectedNode => TreeView1.SelectedNode;
-
-        private void SelectedMode()
-        {
-            if (SelectedNode == null)
-            {
-                AddLevelButton1.Enabled = false;
-                DeleteSelectedButton1.Enabled = false;
-                EditSelectedButton1.Enabled = false;
-
-                TypeOperationComboBox1.Visible = false;
-                NameOperationBox1.Visible = false;
-                ValueOperationBox1.Visible = false;
-                CancelOperationButton1.Visible = false;
-                CanSave(false);
-                return;
-            }
-            AddLevelButton1.Enabled = true;
-            DeleteSelectedButton1.Enabled = true;
-            EditSelectedButton1.Enabled = true;
-
-            TypeOperationComboBox1.Visible = false;
-            NameOperationBox1.Visible = false;
-            ValueOperationBox1.Visible = false;
-            CancelOperationButton1.Visible = false;
-            CanSave(false);
-        }
-        private void EditMode()
-        {
-            AddLevelButton1.Enabled = false;
-            DeleteSelectedButton1.Enabled = false;
-            EditSelectedButton1.Enabled = false;
-
-            TypeOperationComboBox1.Visible = true;
-            NameOperationBox1.Visible = true;
-            ValueOperationBox1.Visible = true;
-            CancelOperationButton1.Visible = true;
-        }
-        private void AddMode()
-        {
-            AddLevelButton1.Enabled = false;
-            DeleteSelectedButton1.Enabled = false;
-            EditSelectedButton1.Enabled = false;
-
-            TypeOperationComboBox1.Visible = true;
-            NameOperationBox1.Visible = true;
-            ValueOperationBox1.Visible = true;
-            CancelOperationButton1.Visible = true;
-        }
-        private void CanSave(bool val = true)
-        {
-            SaveOperationButton1.Visible = val;
-        }
+        List<Operation> ops { get; set; } // свойство, массив операций
+        OperationType? OperationCurrentType { get; set; } // тут хранится выбранный тип операции
+        decimal OperationCurrentValue { get; set; } // тут хранится выбранное значение операции
+        string OperationCurrentName { get; set; } // тут хранится выбранное имя операции
+        TreeNode SelectedNode { get; set; } // тут хранится выбранное имя операции
 
 
+        // Функция отвечающая за клик по кнопке "Добавить"
         private void AddLevelButton_Click(object sender, EventArgs e)
         {
-            AddMode();
+            if (SelectedNode == null) return; // проверим, а не null ли наша выбранная нода(в см. выбрали ли мы что-то)
+
+            TypeOperationCombobox.Enabled = true;
+            NameOperationBox.Enabled = true;
+            ValueOperationBox.Enabled = true;
+            CancelButton.Enabled = true;
+
         }
 
-        private void DeleteSelectedButton_Click(object sender, EventArgs e)
+        // Функция отвечающая за блокировку элементов управления при старте
+        public void StartView()
         {
-            if (SelectedNode.Text == "Корень")
-            {
-                MessageBox.Show("Нельзя удалить корневую ноду", "Ошибка",MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (MessageBox.Show("Точно хотите удалить?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) 
-                == DialogResult.Yes)
-            {
-                OperationsList.RemoveAll(f => f.Id == Guid.Parse(SelectedNode.Name));
-                //TreeView1.Nodes.RemoveByKey(SelectedNode.Name);
-                TreeView1.Refresh();
-                TreeView1.Nodes.RemoveAt(SelectedNode.Index);
-            }
-            SelectedMode();
+            AddLevelButton.Enabled = false;
+            EditSelectedButton.Enabled = false;
+            DeleteSelectedButton.Enabled = false;
+            TypeOperationCombobox.Enabled = false;
+            NameOperationBox.Enabled = false;
+            ValueOperationBox.Enabled = false;
+            SaveButton.Enabled = false;
+            CancelButton.Enabled = false;
         }
 
-        private void EditSelectedButton_Click(object sender, EventArgs e)
-        {
-            EditMode();
-            Operation op = OperationsList.FirstOrDefault(f => f.Id == Guid.Parse(SelectedNode.Name));
-            ValueOperationBox1.Value = Decimal.Parse(op.Value.ToString());
-            TypeOperationComboBox1.SelectedIndex = (int)op.Type;
-            NameOperationBox1.Text = op.Name;
-        }
-
-        private void SaveButton_Click(object sender, EventArgs e)
-        {
-            Operation op = new Operation();
-            op.Value = Double.Parse(ValueOperationBox1.Value.ToString());
-            op.Type = (OperationType)TypeOperationComboBox1.SelectedIndex;
-            op.Name = NameOperationBox1.Text;
-            SelectedNode.Nodes.Add(op.Id.ToString(), $@"{op.Name} | {op.Type} | {op.Value} руб.");
-            SelectedMode();
-        }
-
+        // Функция отвечающая за клик по кнопке "Отмена"
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            SelectedMode();
-            ValueOperationBox1.Value = 0;
-            TypeOperationComboBox1.SelectedIndex = 1;
-            NameOperationBox1.Text = "";
+            StartView(); // задаём изначальный вид
+            OperationCurrentType = null; // обнуляем свойства
+            OperationCurrentName = null;
+            OperationCurrentValue = 0;
         }
 
-        private void TreeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        // Функция отвечающая за изменение текста в текстовом поле NameOperation
+        private void NameOperationBox_TextChanged(object sender, EventArgs e)
         {
-            //SelectedNode = e.Node;
-            this.Text = SelectedNode.Name;
-            SelectedMode();
+
         }
 
-        private void NameOperationBox1_TextChanged(object sender, EventArgs e)
+        // Функция отвечающая за клик по кнопке "Сохранить"
+        private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(NameOperationBox1.Text) || !String.IsNullOrWhiteSpace(NameOperationBox1.Text))
-                CanSave();
-            else
-                CanSave(false);
+            Operation newOp = new Operation()
+            {
+                Name = OperationCurrentName,
+                Value = OperationCurrentValue,
+                Type = OperationCurrentType
+            };
+            ops.Add(newOp);
+
+            SelectedNode.Nodes.Add(new TreeNode(newOp.Name+" | "+ newOp.Type + " | " + newOp.Value));
+            SelectedNode.Expand();
+            OperationCurrentType = null; // обнуляем свойства
+            OperationCurrentName = null;
+            OperationCurrentValue = 0;
+            StartView(); // задаём изначальный вид
+        }
+
+        // Функция отвечающая за клик по кнопке "Удалить"
+        private void DeleteSelectedButton_Click(object sender, EventArgs e)
+        {
 
         }
-    }
-}
+
+        // Функция отвечающая за клик по кнопке "Редактировать"
+        private void EditSelectedButton_Click(object sender, EventArgs e)
+        {
+            TypeOperationCombobox.SelectedValue = OperationCurrentType;
+            NameOperationBox.Text = OperationCurrentName; // задаём свойства
+            ValueOperationBox.Value = OperationCurrentValue;
+        }
+
+        // Функция срабатывающая в момент изменения текста в TypeBox
+        private void TypeOperationCombobox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            OperationPropertiesValidation();
+        }
+        
+        // Функция проверяет всё ли впорядке в полях ввода и возвращает true если всё ок
+        private void OperationPropertiesValidation()
+        {
+            // "классический" подход
+            if (String.IsNullOrEmpty(OperationCurrentName) // проверяем, выбрано ли чтото в TypeBox
+                && OperationCurrentType is OperationType) // заполнено ли поле NameBox
+            {
+                SaveButton.Enabled = true;
+            }
+            SaveButton.Enabled = false;
+        }
+
+        // Функция срабатывающая в момент изменения текста в ValueBox
+        private void ValueOperationBox_ValueChanged(object sender, EventArgs e)
+        {
+            OperationCurrentValue = ValueOperationBox.Value;
+            OperationPropertiesValidation();
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (treeView1.SelectedNode == null) return;
+            SelectedNode = treeView1.SelectedNode;
+            AddLevelButton.Enabled = true;
+            DeleteSelectedButton.Enabled = true;
+            EditSelectedButton.Enabled = true;
+            OperationCurrentType = (OperationType)TypeOperationCombobox.SelectedValue;
+            OperationCurrentName = NameOperationBox.Text; // задаём свойства
+            OperationCurrentValue = ValueOperationBox.Value;
+            OperationPropertiesValidation();
+        }
+    }// public partial class Form1 : Form
+} // namespace EcoApp
