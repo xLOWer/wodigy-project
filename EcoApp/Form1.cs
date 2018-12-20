@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 namespace EcoApp
 {
-    // Класс формы Form1
     public partial class Form1 : Form
     {
         public Form1()
@@ -12,26 +11,19 @@ namespace EcoApp
             InitializeComponent();
             ops = new List<Operation>();
             TypeOperationCombobox.DataSource = Enum.GetValues(typeof(OperationType));
-            SetNonState();
+            NonState();
         }
 
-        List<Operation> ops { get; set; } 
-        OperationType? OperationCurrentType { get; set; } 
-        decimal OperationCurrentValue { get; set; }
-        string OperationCurrentName { get; set; }
-        TreeNode SelectedNode { get; set; }
+        List<Operation> ops { get; set; }
                 
         private void AddLevelButton_Click(object sender, EventArgs e)
         {
-            if (SelectedNode == null) return;
+            if (treeView1.SelectedNode == null) return;
+            EditingState();
         }
 
-        //Set - Установить
-        //Non - Не/Отсутствие
-        //State - Состояние
-        public void SetNonState() 
+        public void NonState() 
         {
-            // устанавливаем флаги доступа
             AddLevelButton.Enabled = false;
             EditSelectedButton.Enabled = false;
             DeleteSelectedButton.Enabled = false;
@@ -40,16 +32,21 @@ namespace EcoApp
             ValueOperationBox.Enabled = false;
             SaveButton.Enabled = false;
             CancelButton.Enabled = false;
-
-            // сбрасываем свойства
-            OperationCurrentType = null;
-            OperationCurrentName = null;
-            OperationCurrentValue = 0;
         }
-        
+
+        public void EditingState()
+        {
+
+        }
+
+        public void ChangingState()
+        {
+
+        }
+
         private void CancelButton_Click(object sender, EventArgs e)
         {
-            SetNonState();
+            NonState();
         }
         
         private void NameOperationBox_TextChanged(object sender, EventArgs e)
@@ -61,15 +58,15 @@ namespace EcoApp
         {
             Operation newOp = new Operation()
             {
-                Name = OperationCurrentName,
-                Value = OperationCurrentValue,
-                Type = OperationCurrentType
+                Name = NameOperationBox.Text,
+                Value = ValueOperationBox.Value,
+                Type = (OperationType)TypeOperationCombobox.SelectedValue
             };
             ops.Add(newOp);
 
-            SelectedNode.Nodes.Add(new TreeNode(newOp.Name + " | " + newOp.Type + " | " + newOp.Value));
-            SelectedNode.Expand();
-            SetNonState();
+            treeView1.SelectedNode.Nodes.Add(new TreeNode(newOp.Name + " | " + newOp.Type + " | " + newOp.Value));
+            treeView1.SelectedNode.Expand();
+            NonState();
         }
         
         private void DeleteSelectedButton_Click(object sender, EventArgs e)
@@ -79,9 +76,7 @@ namespace EcoApp
         
         private void EditSelectedButton_Click(object sender, EventArgs e)
         {
-            TypeOperationCombobox.SelectedValue = OperationCurrentType;
-            NameOperationBox.Text = OperationCurrentName;
-            ValueOperationBox.Value = OperationCurrentValue;
+
         }
         
         private void TypeOperationCombobox_SelectedValueChanged(object sender, EventArgs e)
@@ -91,26 +86,24 @@ namespace EcoApp
         
         private void OperationPropertiesValidation()
         {
-            if (String.IsNullOrEmpty(OperationCurrentName) && OperationCurrentType.HasValue)
+            SaveButton.Enabled = false;
+
+            if ( ! String.IsNullOrEmpty(NameOperationBox.Text) 
+                && TypeOperationCombobox.SelectedValue != null)
             {
                 SaveButton.Enabled = true;
             }
-            SaveButton.Enabled = false;
         }
         
         private void ValueOperationBox_ValueChanged(object sender, EventArgs e)
         {
-            OperationCurrentValue = ValueOperationBox.Value;
             OperationPropertiesValidation();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (treeView1.SelectedNode == null) return;
-            SelectedNode = treeView1.SelectedNode;
-            OperationCurrentType = (OperationType)TypeOperationCombobox.SelectedValue;
-            OperationCurrentName = NameOperationBox.Text;
-            OperationCurrentValue = ValueOperationBox.Value;
+
             OperationPropertiesValidation();
         }
 

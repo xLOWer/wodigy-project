@@ -52,8 +52,7 @@ namespace EcoApp
 
         private string Name2 { get; set; } // можно использовать просто своёства без полей
         // ТипСвойства  ИмяСвойства { get; set; }
-
-
+               
 /* ФУНКЦИИ */
 
             
@@ -100,6 +99,43 @@ namespace EcoApp
         //      return ОбъектТакогоЖеТипаКакФункция;
         //}
 
+/* КЛАССЫ */
+
+        class ClassName   // объявляем класс
+        {
+            public string Property1 { get; set; } // свойство 1
+            public string Property2 { get; set; } // свойство 2
+
+            // конструктор класса
+            public ClassName(string Property1, string Property2)
+            {
+                // свойству класса, из контекста через this, задаём значение пришедшее из аргумента конструктора
+                this            .Property1       = Property1; 
+              //^                ^                 ^
+              //this=ClassName | свойство класса | параметр из аргументов
+                this.Property2 = Property2;
+            }
+            public ClassName() { } // конструктор по-умолчанию
+        }
+
+        private void func(string a, string b)
+        {
+            // вид определения экземпляра класса 1: через констркутор по-умолчанию
+            ClassName         ClassName_Name1 = new                  ClassName();
+          // ^                ^                 ^                    ^
+          // тип=имя класса | имя экземпляра1 | ключевое слово new | вызов конструктора (в данном случае по-умолчанию)
+                      
+            // вид определения экземпляра класса 2: через перегруженный констркутор
+            ClassName         ClassName_Name2 = new                  ClassName(a, b);
+          // ^                ^                 ^                    ^
+          // тип=имя класса | имя экземпляра2 | ключевое слово new | вызов 'нашего' конструктора, с параметрами
+                      
+            // вид определения экземпляра класса 3: через явное задание свойств
+            ClassName         ClassName_Name3 = new                  ClassName() { Property1 = a, Property2 = b};
+          // ^                ^                 ^                    ^
+          // тип=имя класса | имя экземпляра3 | ключевое слово new | конструктор | внутри определяем свойства
+
+        }
 
 /* КОНСТРУКТОРЫ */
 
@@ -130,6 +166,51 @@ namespace EcoApp
         private HelpClass _HelpClass = new HelpClass(); // инициализация экземпляра класса
         private HelpClass _HelpClass1 = new HelpClass(new int()); // инициализация экземпляра класса с инициализацией анонимного экземпляра целочисленного типа    
         private decimal _decimal1 = new decimal(33.33); // инициализация переменной с явной задачей значения
+
+/* УСЛОВИЯ */
+
+        private void func()
+        {
+            // для обычных типов
+            int i = 0, a;
+
+            if (i > 0) a = 1; //    если i больше 0
+            if (i < 0) a = -1; //   если i меньше 0
+            if (i == 0) a = 0; //   если i равно 0 *пройдёт проверку это условие
+            
+            int b = 0, c = 0, d;
+
+            if (b != c && b > c) d = b + c; //  если b не равно c И b больше c
+            if (b >= c || b <= c) d = 0; //     если b больше или равно с ИЛИ b меньше или равно c *пройдёт это условие
+
+            // для логических типов
+            bool    IsHuman             = true, // является человеком
+                    IsCanSpeakingRussian= true, // умеет говорить по-русски
+                    IsCanPlayBalalayka  = true; // умеет играть на балалайке
+            string  WhoIs               = "";
+
+            if (IsHuman && IsCanSpeakingRussian && IsCanPlayBalalayka)      WhoIs = "Russian";
+            // условие чиатется как: это человек, умеет говорить по-русски и умеет играть на балалайке
+
+            if (IsHuman && !IsCanSpeakingRussian && !IsCanPlayBalalayka)    WhoIs = "American";
+            if (IsHuman && IsCanSpeakingRussian && !IsCanPlayBalalayka)     WhoIs = "Ukrain";
+            if (IsHuman && !IsCanSpeakingRussian && IsCanPlayBalalayka)     WhoIs = "Belarusian";
+            if (!IsHuman && !IsCanSpeakingRussian && IsCanPlayBalalayka)    WhoIs = "Russian Bear";
+            if (!IsHuman && !IsCanSpeakingRussian && !IsCanPlayBalalayka)   WhoIs = "Alien From Alpha Centauri";
+
+            /*
+             ЛОГИЧЕСКИЕ операторы (не путать с бинарными)
+             &&     И
+             ||     ИЛИ
+             >      больше
+             <      меньше
+             ==     равно
+             !      НЕ       выражение в if (!true == false) значит true
+             !=     НЕ равно
+             >=     больше или равно
+             <=     меньше или равно             
+             */
+        }
 
     }
 }
