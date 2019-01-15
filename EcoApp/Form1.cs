@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace EcoApp
 {
@@ -12,15 +15,11 @@ namespace EcoApp
             ops = new List<Operation>();
             TypeOperationCombobox.DataSource = Enum.GetValues(typeof(OperationType));
             NonState();
+            xmlSer = new XmlSerializer(typeof(Operation));
         }
 
-        List<Operation> ops { get; set; }
-                
-        private void AddLevelButton_Click(object sender, EventArgs e)
-        {
-            if (treeView1.SelectedNode == null) return;
-            EditingState();
-        }
+        XmlSerializer xmlSer;
+        List<Operation> ops;
 
         public void NonState() 
         {
@@ -36,11 +35,22 @@ namespace EcoApp
 
         public void EditingState()
         {
-
+            AddLevelButton.Enabled = true;
+            EditSelectedButton.Enabled = true;
         }
 
         public void ChangingState()
         {
+            AddLevelButton.Enabled = false;
+            EditSelectedButton.Enabled = false;
+            DeleteSelectedButton.Enabled = false;
+
+            TypeOperationCombobox.Enabled = true;
+            NameOperationBox.Enabled = true;
+            ValueOperationBox.Enabled = true;
+
+            SaveButton.Enabled = false;
+            CancelButton.Enabled = true;
 
         }
 
@@ -65,10 +75,16 @@ namespace EcoApp
             ops.Add(newOp);
 
             treeView1.SelectedNode.Nodes.Add(new TreeNode(newOp.Name + " | " + newOp.Type + " | " + newOp.Value));
-            treeView1.SelectedNode.Expand();
+            treeView1.SelectedNode.Expand();            
             NonState();
         }
-        
+
+        private void AddLevelButton_Click(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode == null) return;
+            ChangingState();
+        }
+
         private void DeleteSelectedButton_Click(object sender, EventArgs e)
         {
 
@@ -76,7 +92,7 @@ namespace EcoApp
         
         private void EditSelectedButton_Click(object sender, EventArgs e)
         {
-
+            ChangingState();
         }
         
         private void TypeOperationCombobox_SelectedValueChanged(object sender, EventArgs e)
@@ -89,7 +105,7 @@ namespace EcoApp
             SaveButton.Enabled = false;
 
             if ( ! String.IsNullOrEmpty(NameOperationBox.Text) 
-                && TypeOperationCombobox.SelectedValue != null)
+                /*&& (OperationType)TypeOperationCombobox.SelectedValue */)
             {
                 SaveButton.Enabled = true;
             }
@@ -104,8 +120,29 @@ namespace EcoApp
         {
             if (treeView1.SelectedNode == null) return;
 
-            OperationPropertiesValidation();
+            EditingState();
         }
 
+        private void SaveXml_Click(object sender, EventArgs e)
+        {
+            using (var stream = XmlWriter.Create(new FileStream("ops.xml",FileMode.Append | FileMode.Append)) )
+            {
+                xmlSer.Serialize(stream, ops[0]);
+            }
+        }
+
+        private void LoadXml_Click(object sender, EventArgs e)
+        {
+            using (
+                    var stream = XmlReader.Create(
+                        new FileStream("ops.xml", FileMode.Open)
+                    )
+                )
+            {
+                ops.Add((Operation)xmlSer.Deserialize(stream));
+            }
+
+            treeView1.Nodes["root"].Nodes.Add(ops[0].Name + " | " + ops[0].Type + " | " + ops[0].Value);
+        }
     }// public partial class Form1 : Form
 } // namespace EcoApp

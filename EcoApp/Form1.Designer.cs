@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Корень");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Корень");
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -39,6 +39,8 @@
             this.DeleteSelectedButton = new System.Windows.Forms.Button();
             this.AddLevelButton = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.SaveXml = new System.Windows.Forms.Button();
+            this.LoadXml = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -55,6 +57,8 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.AutoScroll = true;
+            this.splitContainer1.Panel1.Controls.Add(this.LoadXml);
+            this.splitContainer1.Panel1.Controls.Add(this.SaveXml);
             this.splitContainer1.Panel1.Controls.Add(this.CancelButton);
             this.splitContainer1.Panel1.Controls.Add(this.SaveButton);
             this.splitContainer1.Panel1.Controls.Add(this.ValueOperationBox);
@@ -159,13 +163,33 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            treeNode1.Name = "Root";
-            treeNode1.Text = "Корень";
+            treeNode3.Name = "Root";
+            treeNode3.Text = "Корень";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode1});
+            treeNode3});
             this.treeView1.Size = new System.Drawing.Size(651, 450);
             this.treeView1.TabIndex = 0;
             this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            // 
+            // SaveXml
+            // 
+            this.SaveXml.Location = new System.Drawing.Point(12, 415);
+            this.SaveXml.Name = "SaveXml";
+            this.SaveXml.Size = new System.Drawing.Size(114, 23);
+            this.SaveXml.TabIndex = 8;
+            this.SaveXml.Text = "Сохранить(xml)";
+            this.SaveXml.UseVisualStyleBackColor = true;
+            this.SaveXml.Click += new System.EventHandler(this.SaveXml_Click);
+            // 
+            // LoadXml
+            // 
+            this.LoadXml.Location = new System.Drawing.Point(12, 386);
+            this.LoadXml.Name = "LoadXml";
+            this.LoadXml.Size = new System.Drawing.Size(114, 23);
+            this.LoadXml.TabIndex = 9;
+            this.LoadXml.Text = "Загрухить(xml)";
+            this.LoadXml.UseVisualStyleBackColor = true;
+            this.LoadXml.Click += new System.EventHandler(this.LoadXml_Click);
             // 
             // Form1
             // 
@@ -197,6 +221,8 @@
         private System.Windows.Forms.Button DeleteSelectedButton;
         private System.Windows.Forms.Button AddLevelButton;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.Button LoadXml;
+        private System.Windows.Forms.Button SaveXml;
     }
 }
 
