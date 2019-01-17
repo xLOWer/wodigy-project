@@ -18,6 +18,7 @@ namespace EcoApp
                 
         private void AddLevelButton_Click(object sender, EventArgs e)
         {
+            if (treeView1.SelectedNode == null) return;
             EditingState();
         }
 
