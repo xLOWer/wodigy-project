@@ -15,7 +15,7 @@ namespace EcoApp
             ops = new List<Operation>();
             TypeOperationCombobox.DataSource = Enum.GetValues(typeof(OperationType));
             NonState();
-            xmlSer = new XmlSerializer(typeof(Operation));
+            xmlSer = new XmlSerializer(ops.GetType());
         }
 
         XmlSerializer xmlSer;
@@ -125,7 +125,9 @@ namespace EcoApp
 
         private void SaveXml_Click(object sender, EventArgs e)
         {
-            using (var stream = XmlWriter.Create(new FileStream("ops.xml",FileMode.Append | FileMode.Append)) )
+            var FileStream = new FileStream("ops.xml", FileMode.Append | FileMode.Append);
+
+            using (var stream = XmlWriter.Create(FileStream) )
             {
                 xmlSer.Serialize(stream, ops[0]);
             }
