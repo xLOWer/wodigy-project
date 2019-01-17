@@ -18,7 +18,6 @@ namespace EcoApp
                 
         private void AddLevelButton_Click(object sender, EventArgs e)
         {
-            if (treeView1.SelectedNode == null) return;
             EditingState();
         }
 
@@ -47,6 +46,7 @@ namespace EcoApp
         private void CancelButton_Click(object sender, EventArgs e)
         {
             NonState();
+            //123
         }
         
         private void NameOperationBox_TextChanged(object sender, EventArgs e)
